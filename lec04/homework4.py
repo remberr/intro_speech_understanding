@@ -14,5 +14,16 @@ def next_birthday(date, birthdays):
     '''
     birthday = (1,1)
     list_of_names = []
+
+    sorted_birthdays = sorted(birthdays.keys())
+    for day in sorted_birthdays:
+        if day > date:
+            birthday = day
+            list_of_names = birthdays[day]
+            break
+    else:
+        birthday = sorted_birthdays[0]
+        list_of_names = birthdays[birthday]
+
     return birthday, list_of_names
     
