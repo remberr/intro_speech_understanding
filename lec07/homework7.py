@@ -16,7 +16,14 @@ def major_chord(f, Fs):
     (2) A major third, i.e., four semitones above f
     (3) A major fifth, i.e., seven semitones above f
     '''
-    raise RuntimeError("You need to write this part")
+    omega0 = 2*np.pi*f/Fs
+    n = np.arange(0, Fs/2)
+    G = np.power(2,1/12)
+    root = np.cos(omega0*n)
+    majorthird = np.cos(np.power(G,4)*omega0*n)
+    majorfifth = np.cos(np.power(G,7)*omega0*n)
+    major_chord = root + majorthird + majorfifth
+    return major_chord
 
 def dft_matrix(N):
     '''
@@ -29,7 +36,11 @@ def dft_matrix(N):
     W (NxN array): a matrix of dtype='complex' whose (k,n)^th element is:
            W[k,n] = cos(2*np.pi*k*n/N) - j*sin(2*np.pi*k*n/N)
     '''
-    raise RuntimeError("You need to write this part")
+    W = np.zeros((N,N), dtype='complex')
+    for k in range(N):
+        for n in range(N):
+            W[k,n] = np.cos(2*np.pi*k*n/N) - 1j*np.sin(2*np.pi*k*n/N)
+    return W
 
 def spectral_analysis(x, Fs):
     '''
@@ -43,5 +54,14 @@ def spectral_analysis(x, Fs):
     f1, f2, f3: The three loudest frequencies (in Hertz)
       These should be sorted so f1 < f2 < f3.
     '''
-    raise RuntimeError("You need to write this part")
+    N = len(x)
+    W = dft_matrix(N)
+    X = np.abs(np.matmul(W, x))
+    k1 = np.argmax(X[:int(N/2)])
+    X[k1] = 0
+    k2 = np.argmax(X[:int(N/2)])
+    X[k2] = 0
+    k3 = np.argmax(X[:int(N/2)])
+    f1, f2, f3 = sorted([k1*Fs/N, k2*Fs/N, k3*Fs/N])
+    return f1, f2, f3
 
