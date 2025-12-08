@@ -69,7 +69,6 @@ def train_neuralnet(features, labels, iterations):
         loss.backward()
         optimizer.step()
     return model, lossvalues
-    
 
 def test_neuralnet(model, features):
     '''
