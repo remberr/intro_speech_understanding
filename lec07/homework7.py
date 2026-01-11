@@ -44,4 +44,3 @@ def spectral_analysis(x, Fs):
       These should be sorted so f1 < f2 < f3.
     '''
     raise RuntimeError("You need to write this part")
-
